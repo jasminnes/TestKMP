@@ -1,0 +1,38 @@
+name: Build iOS XCFramework
+
+on:
+  workflow_dispatch: # Manual trigger
+  push:
+    branches: [master]
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v3
+
+      - name: ☕ Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: 🧰 Grant Execution Permission to Gradle Wrapper
+        run: chmod +x ./gradlew
+
+      - name: ⚙️ Build iOS Frameworks
+        run: |
+          ./gradlew :composeApp:linkDebugFrameworkIosArm64
+          ./gradlew :composeApp:linkDebugFrameworkIosX64
+          ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
+
+      - name: 🧱 Assemble XCFramework
+        run: ./gradlew :composeApp:assembleXCFramework
+
+      - name: 📦 Upload XCFramework
+        uses: actions/upload-artifact@v3
+        with:
+          name: ComposeApp.xcframework
+          path: composeApp/build/XCFrameworks/debug/ComposeApp.xcframework
