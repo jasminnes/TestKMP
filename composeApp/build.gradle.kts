@@ -103,3 +103,37 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+
+// Add at the bottom of build.gradle.kts
+tasks.register("assembleXCFramework") {
+    group = "build"
+    description = "Assembles an XCFramework from all iOS targets."
+
+    dependsOn(
+        "linkDebugFrameworkIosArm64",
+        "linkDebugFrameworkIosSimulatorArm64",
+        "linkDebugFrameworkIosX64"
+    )
+
+    doLast {
+        val outputDir = buildDir.resolve("xcode-frameworks")
+        outputDir.mkdirs()
+
+        val arm64Framework = buildDir.resolve("bin/iosArm64/debugFramework/ComposeApp.framework")
+        val simArm64Framework = buildDir.resolve("bin/iosSimulatorArm64/debugFramework/ComposeApp.framework")
+        val x64Framework = buildDir.resolve("bin/iosX64/debugFramework/ComposeApp.framework")
+
+        exec {
+            commandLine(
+                "xcodebuild", "-create-xcframework",
+                "-framework", arm64Framework.absolutePath,
+                "-framework", simArm64Framework.absolutePath,
+                "-framework", x64Framework.absolutePath,
+                "-output", outputDir.resolve("ComposeApp.xcframework").absolutePath
+            )
+        }
+
+        println("✅ XCFramework created at: ${outputDir.resolve("ComposeApp.xcframework")}")
+    }
+}
+
