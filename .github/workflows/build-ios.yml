@@ -10,9 +10,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: List root directory files
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Debug: List repo files after checkout
         run: ls -la
 
-      - name: List subdirectories recursively
-        run: find . -type d
 
