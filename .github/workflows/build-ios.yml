@@ -10,29 +10,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v3
-
-      - name: ☕ Set Up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: 🧰 Grant Execution Permission to Gradle Wrapper
-        run: chmod +x ./gradlew
-
-      - name: ⚙️ Build iOS Frameworks
+      - name: ⚙️ Build iOS Simulator Frameworks Only
         run: |
-          ./gradlew :composeApp:linkDebugFrameworkIosArm64
-          ./gradlew :composeApp:linkDebugFrameworkIosX64
-          ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
+          ./gradlew :composeApp:linkDebugFrameworkIosX64 --stacktrace --info
+          ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64 --stacktrace --info
 
-      - name: 🧱 Assemble XCFramework
-        run: ./gradlew :composeApp:assembleXCFramework
-
-      - name: 📦 Upload XCFramework
-        uses: actions/upload-artifact@v4
-        with:
-          name: ComposeApp.xcframework
-          path: composeApp/build/XCFrameworks/debug/ComposeApp.xcframework
+      - name: 🧱 Assemble XCFramework Simulator Only
+        run: ./gradlew :composeApp:assembleXCFramework --no-configuration-cache --stacktrace --info
