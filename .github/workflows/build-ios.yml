@@ -13,7 +13,7 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v3
 
-      - name: Debug: List repo files after checkout
+      - name: Debug
         run: ls -la
 
 
