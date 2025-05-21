@@ -34,7 +34,7 @@ jobs:
         run: ./gradlew :composeApp:linkDebugFrameworkIosX64 :composeApp:linkDebugFrameworkIosArm64 :composeApp:linkDebugFrameworkIosSimulatorArm64
 
       - name: Upload iOS framework artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: ios-frameworks
           path: |
