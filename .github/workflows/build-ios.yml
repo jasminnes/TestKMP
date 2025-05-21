@@ -10,13 +10,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: ⚙️ Build iOS Simulator Frameworks Only
-        working-directory: ./composeApp
-        run: |
-          ./gradlew :composeApp:linkDebugFrameworkIosX64 --stacktrace --info
-          ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64 --stacktrace --info
+      - name: List root directory files
+        run: ls -la
 
-      - name: 🧱 Assemble XCFramework Simulator Only
-        working-directory: ./composeApp
-        run: ./gradlew :composeApp:assembleXCFramework --no-configuration-cache --stacktrace --info
+      - name: List subdirectories recursively
+        run: find . -type d
 
