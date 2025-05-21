@@ -26,8 +26,8 @@ jobs:
     - name: Build KMM iOS framework
       run: ./gradlew :composeApp:assembleXCFramework
 
-    - name: Upload XCFramework artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: shared-xcframework
-        path: composeApp/build/XCFrameworks/
+    # - name: Upload XCFramework artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: shared-xcframework
+    #     path: composeApp/build/XCFrameworks/
