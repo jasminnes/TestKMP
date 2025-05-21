@@ -11,9 +11,12 @@ jobs:
 
     steps:
       - name: ⚙️ Build iOS Simulator Frameworks Only
+        working-directory: ./composeApp
         run: |
           ./gradlew :composeApp:linkDebugFrameworkIosX64 --stacktrace --info
           ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64 --stacktrace --info
 
       - name: 🧱 Assemble XCFramework Simulator Only
+        working-directory: ./composeApp
         run: ./gradlew :composeApp:assembleXCFramework --no-configuration-cache --stacktrace --info
+
