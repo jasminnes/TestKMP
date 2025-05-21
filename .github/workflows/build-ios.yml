@@ -32,7 +32,7 @@ jobs:
         run: ./gradlew :composeApp:assembleXCFramework
 
       - name: 📦 Upload XCFramework
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ComposeApp.xcframework
           path: composeApp/build/XCFrameworks/debug/ComposeApp.xcframework
